@@ -2,7 +2,7 @@ FROM debian:jessie
 ARG DOCKERIZE_VERSION=v0.2.0
 ARG POSTGRES_CLIENT_VERSION=9.4
 
-RUN echo deb http://debian.xtdv.net/debian jessie main > /etc/apt/sources.list && apt-get update && \
+RUN echo deb http://kambing.ui.ac.id/debian jessie main > /etc/apt/sources.list && apt-get update && \
     apt-get install -y postgresql-client-$POSTGRES_CLIENT_VERSION libffi-dev libssl-dev pgpool2 wget && \
     wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
     && tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
@@ -12,8 +12,8 @@ COPY ./pgpool/configs /var/pgpool_configs
 
 RUN chmod +x -R /usr/local/bin/pgpool
 
-ENV CHECK_USER replication_user
-ENV CHECK_PASSWORD replication_pass
+ENV CHECK_USER replication_odoo
+ENV CHECK_PASSWORD replication_odoo
 ENV CHECK_PGCONNECT_TIMEOUT 10
 ENV WAIT_BACKEND_TIMEOUT 120
 ENV REQUIRE_MIN_BACKENDS 0
