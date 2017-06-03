@@ -1,7 +1,7 @@
 FROM postgres:9.6
 ARG POSTGRES_VERSION=9.6
 
-RUN echo deb http://debian.xtdv.net/debian jessie main > /etc/apt/sources.list && apt-get update --fix-missing && \
+RUN echo deb http://kambing.ui.ac.id/debian jessie main > /etc/apt/sources.list && apt-get update --fix-missing && \
     apt-get install -y postgresql-server-dev-$POSTGRES_VERSION postgresql-$POSTGRES_VERSION-repmgr wget
 
 # Inherited variables
@@ -12,10 +12,10 @@ RUN echo deb http://debian.xtdv.net/debian jessie main > /etc/apt/sources.list &
 ENV CLUSTER_NAME pg_cluster
 
 # special repmgr db for cluster info
-ENV REPLICATION_DB replication_db
-ENV REPLICATION_USER replication_user
-ENV REPLICATION_PASSWORD replication_pass
-ENV REPLICATION_PRIMARY_PORT 5432
+ENV REPLICATION_DB replication_odoo
+ENV REPLICATION_USER replication_odoo
+ENV REPLICATION_PASSWORD replication_odoo
+ENV REPLICATION_PRIMARY_PORT 5433
 
 
 # Host for replication (REQUIRED, NO DEFAULT)
@@ -74,7 +74,7 @@ RUN chmod -R +x /usr/local/bin/cluster
 RUN ln -s /usr/local/bin/cluster/functions/* /usr/local/bin/
 COPY ./pgsql/configs /var/cluster_configs
 
-EXPOSE 5432
+EXPOSE 5433
 
 VOLUME /var/lib/postgresql/data
 USER root
