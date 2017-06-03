@@ -17,20 +17,20 @@ services:
             NODE_PRIORITY: 100  # (default: 100)
 
             #database we want to use for application
-            POSTGRES_PASSWORD: monkey_pass
-            POSTGRES_USER: monkey_user
-            POSTGRES_DB: monkey_db
+            POSTGRES_PASSWORD: odoo
+            POSTGRES_USER: odoo
+            POSTGRES_DB: odoo
 
             CONFIGS: "listen_addresses:'*'"
                                   # in format variable1:value1[,variable2:value2[,...]]
                                   # used for pgpool.conf file
             #defaults:
             CLUSTER_NAME: pg_cluster # default is pg_cluster
-            REPLICATION_DB: replication_db # default is replication_db
-            REPLICATION_USER: replication_user # default is replication_user
-            REPLICATION_PASSWORD: replication_pass # default is replication_pass
+            REPLICATION_DB: replication_odoo # default is replication_db
+            REPLICATION_USER: replication_odoo # default is replication_user
+            REPLICATION_PASSWORD: replication_odoo # default is replication_pass
         ports:
-            - 5432:5432
+            - 5433:5432
         networks:
             cluster:
                 aliases:
@@ -119,12 +119,12 @@ services:
             PCP_PASSWORD: pcp_pass
             WAIT_BACKEND_TIMEOUT: 60
 
-            CHECK_USER: monkey_user
-            CHECK_PASSWORD: monkey_pass
+            CHECK_USER: odoo
+            CHECK_PASSWORD: odoo
             CHECK_PGCONNECT_TIMEOUT: 3 #timout for checking if primary node is healthy
 
-            DB_USERS: monkey_user:monkey_pass # in format user:password[,user:password[...]]
-            BACKENDS: "0:pgmaster:5432:1:/var/lib/postgresql/data:ALLOW_TO_FAILOVER,1:pgslave1::::,3:pgslave3::::,2:pgslave2::::" #,4:pgslaveDOES_NOT_EXIST::::
+            DB_USERS: odoo:odoo # in format user:password[,user:password[...]]
+            BACKENDS: "0:pgmaster:5433:1:/var/lib/postgresql/data:ALLOW_TO_FAILOVER,1:pgslave1::::,3:pgslave3::::,2:pgslave2::::" #,4:pgslaveDOES_NOT_EXIST::::
                       # in format num:host:port:weight:data_directory:flag[,...]
                       # defaults:
                       #   port: 5432
